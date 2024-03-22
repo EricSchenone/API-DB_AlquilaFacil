@@ -6,6 +6,7 @@ import { PropertyModule } from './property/property.module';
 import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
 import { BookingModule } from './booking/booking.module';
+import { PropertiesUsersModule } from './properties_users/properties_users.module';
 
 @Module({
   imports: [
@@ -19,12 +20,13 @@ import { BookingModule } from './booking/booking.module';
       entities: [
         'dist/**/**.entity{.ts,.js}' 
       ],
-      synchronize: false
+      synchronize: true
     }),
     PropertyModule,
     UserModule,
     LocationModule,
     BookingModule,
+    PropertiesUsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
