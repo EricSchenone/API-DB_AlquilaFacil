@@ -33,7 +33,9 @@ export class LocationController {
   }
 
   @Delete(':id')
-  async deleteLocation( id: number): Promise<any> {
+  async deleteLocation(@Param(('id'), new ParseIntPipe({
+    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
+  })) id: number): Promise<any> {
     return this.locationService.deleteLocation(id);
   }
 

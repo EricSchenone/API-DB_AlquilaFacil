@@ -8,7 +8,7 @@ export class BookingController {
   constructor(private readonly bookingService: BookingService) { }
 
   @Post()
-  async createBooking( booking : BookingDto): Promise<Booking> {
+  async createBooking(booking: BookingDto): Promise<Booking> {
     return this.bookingService.createBooking(booking)
   }
 
@@ -27,13 +27,15 @@ export class BookingController {
   @Put(':id')
   async updateBooking(@Param(('id'), new ParseIntPipe({
     errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
-  })) id: number, @Body() booking: BookingDto) : Promise<Booking> {
+  })) id: number, @Body() booking: BookingDto): Promise<Booking> {
     return this.bookingService.updateBooking(id, booking)
   }
 
   @Delete(':id')
-  async deleteBooking( id: number): Promise<any> {
+  async deleteBooking(@Param(('id'), new ParseIntPipe({
+    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
+  })) id: number): Promise<any> {
     return this.bookingService.deleteBooking(id);
   }
- 
+
 }

@@ -2,11 +2,15 @@ import { IsDate, IsBoolean } from 'class-validator';
 
 export class BookingDto {
     @IsDate()
-    readonly date: Date
-    readonly date_init: Date
-    readonly date_finish: Date
+    readonly date: Date;
+
+    @IsDate()
+    readonly date_init: Date;
+
+    @IsDate()
+    readonly date_finish: Date;
 
     @IsBoolean()
-    readonly status: boolean
+    readonly status: boolean;
 
 }
