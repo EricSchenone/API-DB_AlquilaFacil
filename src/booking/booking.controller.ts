@@ -1,13 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus } from '@nestjs/common';
 import { BookingService } from './booking.service';
-import { CreateBookingDto } from './dto/create-booking.dto';
-import { UpdateBookingDto } from './dto/update-booking.dto';
+import { BookingDto } from './dto/create-booking.dto';
 import { Booking } from './entities/booking.entity';
 
 @Controller('booking')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) { }
 
+  @Post()
+  async createBooking( booking : BookingDto): Promise<Booking> {
+    return this.bookingService.createBooking(booking)
+  }
 
   @Get()
   async getAll(): Promise<Booking[]> {
@@ -20,4 +23,17 @@ export class BookingController {
   })) id: string): Promise<Booking> {
     return this.bookingService.getBookingById(+id);
   }
+
+  @Put(':id')
+  async updateBooking(@Param(('id'), new ParseIntPipe({
+    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
+  })) id: number, @Body() booking: BookingDto) : Promise<Booking> {
+    return this.bookingService.updateBooking(id, booking)
+  }
+
+  @Delete(':id')
+  async deleteBooking( id: number): Promise<any> {
+    return this.bookingService.deleteBooking(id);
+  }
+ 
 }
