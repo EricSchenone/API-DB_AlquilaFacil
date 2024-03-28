@@ -62,8 +62,8 @@ export class BookingService {
 
   async updateBooking(id: number, bookingDto: BookingDto): Promise<Booking> {
     try {
-      const criteria: FindOneOptions = { where: { booking_id: id } };
-      let updateBooking: Booking = await this.bookingRepository.findOne(criteria);
+      const criterio: FindOneOptions = { where: { booking_id: id } };
+      let updateBooking: Booking = await this.bookingRepository.findOne(criterio);
       if (!updateBooking) throw new NotFoundException('No existe una reserva con el id' + id)
       updateBooking.setDate(bookingDto.date);
       updateBooking.setDateInit(bookingDto.date_init);
@@ -91,8 +91,8 @@ export class BookingService {
 
   async deleteBooking(id: number): Promise<any> {
     try {
-      const criteria: FindOneOptions = { where: { id_booking: id } };
-      const booking: Booking = await this.bookingRepository.findOne(criteria);
+      const criterio: FindOneOptions = { where: { id_booking: id } };
+      const booking: Booking = await this.bookingRepository.findOne(criterio);
       if (!booking) throw new NotFoundException('No existe una escuela con el id:' + id)
     } catch (error) {
       if (error instanceof QueryFailedError) {
