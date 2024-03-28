@@ -80,10 +80,10 @@ export class BookingService {
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
+        status: HttpStatus.NOT_FOUND,
         error: 'Error en la actualizacion de la reserva'
       },
-        HttpStatus.BAD_REQUEST)
+        HttpStatus.NOT_FOUND)
       
     }
 

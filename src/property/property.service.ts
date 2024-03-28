@@ -124,12 +124,19 @@ async updateProperty(id: number, propertyDto: PropertyDto): Promise<Property> {
            propertyToUpdate.setUrlIfrme(propertyDto.url_iframe);
            return await this.propertyRepository.save(propertyToUpdate);
     } catch (error) {
+      if (error instanceof QueryFailedError) {
+        throw new HttpException({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Error en la actualizacion de la rerserva en la base de datos'
+        },
+          HttpStatus.INTERNAL_SERVER_ERROR)
+      };
     throw new HttpException(
       {
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        status: HttpStatus.NOT_FOUND,
         error: 'Error al actualizar la propiedad',
       },
-      HttpStatus.INTERNAL_SERVER_ERROR,
+      HttpStatus.NOT_FOUND,
     );
   }
 }
