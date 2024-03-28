@@ -17,7 +17,7 @@ export class Property {
     @Column({ type: 'int', width: 10 })
     private price: number;
 
-    @Column({ type: 'simple-array', nullable: true })
+    @Column({ type: 'simple-array', nullable: true })//la columna puede tener valores nulos
     private images: string[];
 
     @Column({ type: 'tinyint' })
@@ -42,43 +42,45 @@ export class Property {
         type: string,
         address: string,
         url_iframe: string) {
-            this.title = title;
-            this.description = description;
-            this.rooms = rooms;
-            this.price = price;
-            this.images = images;
-            this.rate = rate;
-            this.type = type;
-            this.address = address;
-            this.url_iframe = url_iframe;
+        this.title = title;
+        this.description = description;
+        this.rooms = rooms;
+        this.price = price;
+        this.images = images;
+        this.rate = rate;
+        this.type = type;
+        this.address = address;
+        this.url_iframe = url_iframe;
     }
 
     getId(): number { return this.id_property };
 
-    getDescription(): string { return this.address };
-    setDescription( description : string): void { this.description = description };
+    getTitle(): string { return this.title };
+    setTitle(title: string): void { this.title = title }
+
+
+    getDescription(): string { return this.description };
+    setDescription(description: string): void { this.description = description };
 
     getRooms(): number { return this.rooms };
-    setRooms( rooms: number ): void { this.rooms = rooms };
-    
+    setRooms(rooms: number): void { this.rooms = rooms };
+
     getPrice(): number { return this.price };
-    setPrice( price: number): void { this.price = price };
+    setPrice(price: number): void { this.price = price };
 
     getImages(): string[] { return this.images };
-    setImages( images: string[]): void { this.images = images };
+    setImages(images: string[]): void { this.images = images };
 
-    getRate(): number { return this,this.rate };
-    setRate( rate: number): void { this.rate = rate };
+    getRate(): number { return this, this.rate };
+    setRate(rate: number): void { this.rate = rate };
 
     getType(): string { return this.type };
-    setType( type: string): void { this.type = type };
+    setType(type: string): void { this.type = type };
 
     getAddress(): string { return this.address };
-    setAddress( address: string ): void { this.address = address };
+    setAddress(address: string): void { this.address = address };
 
     getUrlIframe(): string { return this.url_iframe };
-    setUrlIfrme( url_iframe: string): void { this.url_iframe = url_iframe };
-
-
+    setUrlIfrme(url_iframe: string): void { this.url_iframe = url_iframe };
 
 }
