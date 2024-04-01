@@ -14,7 +14,8 @@ export class PropertyService {
 
   async getAll(): Promise<Property[]> {
     try {
-      return await this.propertyRepository.find();
+      const properties: Property[] = await this.propertyRepository.find({ relations: ['users', 'booking_calendar', 'locations'] });
+      return properties;
     } catch (error) {
       throw new HttpException(
         {
@@ -25,10 +26,11 @@ export class PropertyService {
       );
     }
   }
+  
 
   async getPropertyById(id: number): Promise<Property> {
     try {
-      const criterio: FindOneOptions = { where: { id_property: id } };
+      const criterio: FindOneOptions = { relations: ['users', 'booking_calendar', 'locations' ], where: { id_property: id } };
       const property: Property = await this.propertyRepository.findOne(criterio);
       if (property) return property;
       throw new Error('No existe una propiedad con el id:' + id)

@@ -1,21 +1,35 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Property } from "src/property/entities/property.entity";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn()
     private id_user: number;
+
     @Column({ length: 50})
     private name: string;
+
     @Column({ length: 50})
     private lastname: string;
+
     @Column({ length: 50 })
     private email: string;
+
     @Column({ type: 'int', width:14})
     private phone: number;
+
     @Column( { length: 50 })
     private password: string;
+
     @Column({ length: 50 })
     private username: string;
+    properties: any;
+
+    @OneToMany(() => Property, 
+        property => property.user)
+
+    @JoinColumn()
+    property : Property [];
 
     constructor(name: string, lastname: string, email: string, phone: number, password: string, username: string) {
         this.name = name;

@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Booking } from "src/booking/entities/booking.entity";
+import { User } from "src/user/entities/user.entity";
+import { Location } from "src/location/entities/location.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('properties')
 export class Property {
@@ -31,6 +34,20 @@ export class Property {
 
     @Column({ length: 200 })
     private url_iframe: string;
+
+    @ManyToOne(() => User,
+        user => user.properties)
+      
+     @JoinColumn()
+       user: User;
+    
+    @OneToOne (() => Booking)
+    @JoinColumn()
+    booking : Booking;
+
+    @OneToOne (() => Location)
+    @JoinColumn()
+    location : Location;
 
     constructor(
         title: string,

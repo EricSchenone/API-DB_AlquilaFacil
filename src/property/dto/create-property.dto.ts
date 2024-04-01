@@ -14,7 +14,7 @@ export class PropertyDto {
     @IsNumber()
     readonly rate: number;
     @IsString()
-    readonly type: string;s
+    readonly type: string;
     @IsString()
     readonly address: string;
     @IsString()
