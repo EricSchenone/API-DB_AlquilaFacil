@@ -9,7 +9,7 @@ export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
   @Post()
-  async locationBooking( location : LocationDto): Promise<Location> {
+  async locationBooking(@Body() location : LocationDto): Promise<Location> {
     return this.locationService.createLocation(location)
   }
 
