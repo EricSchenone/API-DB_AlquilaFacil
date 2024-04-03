@@ -4,12 +4,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export class Booking {
     @PrimaryGeneratedColumn()
     private id_booking: number;
+    
     @Column('datetime')
     private date: Date;
+
     @Column()
     private date_init: Date;
+
     @Column()
     private date_finish: Date;
+
     @Column()
     private status: boolean;  
 
@@ -20,18 +24,19 @@ export class Booking {
         this.status = status;
     }
 
-    getIdBooking(): number { return this.id_booking }
+    getIdBooking(): number { return this.id_booking };
 
-    getDate(): Date { return this.date }
-    setDate( date : Date): void { this.date = date }
+    getDate(): Date { return this.date };
+    setDate( date : Date): void { this.date = date };
 
-    getDateInit(): Date { return this.date_init }
-    setDateInit( dateInit : Date): void { this.date_init = dateInit }
+    getDateInit(): Date { return this.date_init };
+    setDateInit( dateInit : Date): void { this.date_init = dateInit };
 
-    getDateFinish(): Date { return this.date_finish }
-    setDateFinish( dateFinish: Date): void { this.date_finish = dateFinish }
+    getDateFinish(): Date { return this.date_finish };
+    setDateFinish( dateFinish: Date): void { this.date_finish = dateFinish };
 
-    getStatus(): boolean { return this.status }
-    setStatus( status : boolean ): void { this.status = status }
+    getStatus(): boolean { return this.status };
+    setStatus( status : boolean ): void { this.status = status };
+
 }
 

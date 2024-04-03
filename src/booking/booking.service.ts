@@ -62,9 +62,8 @@ export class BookingService {
 
   async updateBooking(id: number, bookingDto: BookingDto): Promise<Booking> {
     try {
-      const criterio: FindOneOptions = { where: { booking_id: id } };
-      let updateBooking: Booking = await this.bookingRepository.findOne(criterio);
-      if (!updateBooking) throw new NotFoundException('No existe una reserva con el id' + id)
+      const criteria: FindOneOptions = { where: { booking_id: id } };
+      let updateBooking: Booking = await this.bookingRepository.findOne(criteria);
       updateBooking.setDate(bookingDto.date);
       updateBooking.setDateInit(bookingDto.date_init);
       updateBooking.setDateFinish(bookingDto.date_finish);
@@ -80,10 +79,10 @@ export class BookingService {
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
-        status: HttpStatus.NOT_FOUND,
-        error: 'Error en la actualizacion de la reserva'
+        status: HttpStatus.BAD_REQUEST,
+        error: 'Error en la actualizacion de la reserva, no existe un registro con el id:' + id
       },
-        HttpStatus.NOT_FOUND)
+        HttpStatus.BAD_REQUEST)
       
     }
 
@@ -91,9 +90,9 @@ export class BookingService {
 
   async deleteBooking(id: number): Promise<any> {
     try {
-      const criterio: FindOneOptions = { where: { id_booking: id } };
-      const booking: Booking = await this.bookingRepository.findOne(criterio);
-      if (!booking) throw new NotFoundException('No existe una escuela con el id:' + id)
+      const criteria: FindOneOptions = { where: { id_booking: id } };
+      const booking: Booking = await this.bookingRepository.findOne(criteria);
+      await this.bookingRepository.delete(booking.getIdBooking())
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({

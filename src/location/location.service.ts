@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import {  LocationDto } from './dto/create-location.dto';
+import { LocationDto } from './dto/create-location.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from './entities/location.entity';
 import { FindOneOptions, QueryFailedError, Repository } from 'typeorm';
@@ -65,7 +65,6 @@ export class LocationService {
     try {
       const criteria: FindOneOptions = { where: { id_location: id } };
       let updateLocation: Location = await this.locationRepository.findOne(criteria);
-      if (!location) throw new NotFoundException('No se encuentra una localiad con el id:' + id);
       updateLocation.setCountry(locationDto.country);
       updateLocation.setState(locationDto.state);
       updateLocation.setCity(locationDto.city);
@@ -81,7 +80,7 @@ export class LocationService {
       };
       throw new HttpException({
         status: HttpStatus.BAD_REQUEST,
-        error: 'Error en la actualizacion de la localidad'
+        error: 'Error en la actualizacion de la localidad, no se encuentra un registro con el id' + id
       },
         HttpStatus.BAD_REQUEST)
 
@@ -89,11 +88,11 @@ export class LocationService {
 
   }
 
-  async deleteLocation( id: number): Promise<any> {
+  async deleteLocation(id: number): Promise<any> {
     try {
       const criteria: FindOneOptions = { where: { id_location: id } };
       const location: Location = await this.locationRepository.findOne(criteria);
-      if (!location) throw new NotFoundException('No existe una escuela con el id:' + id)
+      await this.locationRepository.delete(location.getIdLocation())
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({

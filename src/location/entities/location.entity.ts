@@ -4,10 +4,13 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export class Location {
     @PrimaryGeneratedColumn()
     private id_location: number;
+
     @Column({ length: 50 })
     private country: string;
+
     @Column({ length: 50 })
     private state: string;
+    
     @Column({ length: 50 })
     private city: string
 

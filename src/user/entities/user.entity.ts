@@ -25,12 +25,11 @@ export class User {
     private username: string;
     properties: any;
 
-    @OneToMany(() => Property, 
-        property => property.user)
-
+    @OneToMany(() => Property, property => property.user)
     @JoinColumn()
     property : Property [];
 
+   
     constructor(name: string, lastname: string, email: string, phone: number, password: string, username: string) {
         this.name = name;
         this.lastname = lastname;

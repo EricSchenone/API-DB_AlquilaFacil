@@ -1,7 +1,7 @@
 import { Booking } from "src/booking/entities/booking.entity";
-import { User } from "src/user/entities/user.entity";
 import { Location } from "src/location/entities/location.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/user/entities/user.entity";
+import { Column, Entity, OneToOne, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('properties')
 export class Property {

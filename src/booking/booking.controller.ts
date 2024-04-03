@@ -8,7 +8,9 @@ export class BookingController {
   constructor(private readonly bookingService: BookingService) { }
 
   @Post()
-  async createBooking(@Body() booking: BookingDto): Promise<Booking> {
+  async createBooking(
+    @Body() booking: BookingDto
+  ): Promise<Booking> {
     return this.bookingService.createBooking(booking)
   }
 
@@ -18,23 +20,27 @@ export class BookingController {
   }
 
   @Get(':id')
-  async getBookingById(@Param(('id'), new ParseIntPipe({
-    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
-  })) id: string): Promise<Booking> {
+  async getBookingById(
+    @Param(('id'), new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+    id: string
+  ): Promise<Booking> {
     return this.bookingService.getBookingById(+id);
   }
 
   @Put(':id')
-  async updateBooking(@Param(('id'), new ParseIntPipe({
-    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
-  })) id: number, @Body() booking: BookingDto): Promise<Booking> {
-    return this.bookingService.updateBooking(id, booking)
+  async updateBooking(
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+    id: number,
+    @Body() booking: BookingDto,
+  ): Promise<Booking> {
+    return this.bookingService.updateBooking(id, booking);
   }
 
   @Delete(':id')
-  async deleteBooking(@Param(('id'), new ParseIntPipe({
-    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
-  })) id: number): Promise<any> {
+  async deleteBooking(
+    @Param(('id'), new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+    id: number,
+  ): Promise<any> {
     return this.bookingService.deleteBooking(id);
   }
 

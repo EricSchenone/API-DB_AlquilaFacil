@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
 import { BookingModule } from './booking/booking.module';
 import { PropertiesUsersModule } from './properties_users/properties_users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PropertiesUsersModule } from './properties_users/properties_users.modul
     LocationModule,
     BookingModule,
     PropertiesUsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
