@@ -1,13 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/entities/user.entity';
 import { FindOneOptions, Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userRepository: Repository<User>) { }
+  constructor(
+    private userRepository: Repository<User>,
+    private jwtService: JwtService) { }
 
   async login(email: string, pass: string): Promise<any> {
     const criteria: FindOneOptions = { where: { email: email }  }
@@ -15,8 +17,11 @@ export class AuthService {
     if (user?.getPassword() !== pass) {
       throw new UnauthorizedException();
     }
-    user.setPassword(undefined);
-    return user
+    
+    const payload = { sub: user.getIdUser(), name: user.getUsername(), email: user.getEmail() };
+    const accesToken = await this.jwtService.signAsync(payload);
+
+    return { accesToken };
   }
   
   create(createAuthDto: CreateAuthDto) {
