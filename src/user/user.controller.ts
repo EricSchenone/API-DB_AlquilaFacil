@@ -1,41 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
+/*
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
-
+  create(@Body() createUserDto: UserDto) {
+    return this.userService.createUser(createUserDto);
+  }*/
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async getAll(): Promise<User[]> {
+    return this.userService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  async getUserById(@Param(('id'), new ParseIntPipe({
+    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
+  })) id: string): Promise<User> {
+    return this.userService.getUserById(+id);
   }
 
-  @Get(':email')
-  async getUserBtyEmail(@Param('email') email: string): Promise<User> {
-    return this.userService.getUserByEmail(email);
-  }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
 }

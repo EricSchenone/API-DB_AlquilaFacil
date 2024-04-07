@@ -15,10 +15,7 @@ export class User {
     @Column({ length: 50 })
     private email: string;
 
-    @Column({ type: 'int', width:14})
-    private phone: number;
-
-    @Column( { length: 50 })
+    @Column( { length: 200 })
     private password: string;
 
     @Column({ length: 50 })
@@ -30,11 +27,10 @@ export class User {
     property : Property [];
 
    
-    constructor(name: string, lastname: string, email: string, phone: number, password: string, username: string) {
+    constructor(name: string, lastname: string, email: string, password: string, username: string) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-        this.phone = phone;
         this.password = password;
         this.username = username;
     }
@@ -49,9 +45,6 @@ export class User {
 
     public getEmail(): string {return this.email;}
     public setEmail(email: string): void {this.email = email;}
-
-    public getPhone(): number {return this.phone;}
-    public setPhone(phone: number): void {this.phone = phone;}
 
     public getPassword(): string {return this.password;}
     public setPassword(password: string): void {this.password = password;}

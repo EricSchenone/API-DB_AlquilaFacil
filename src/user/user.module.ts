@@ -13,5 +13,6 @@ import { Property } from 'src/property/entities/property.entity';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService]
 })
 export class UserModule { }
