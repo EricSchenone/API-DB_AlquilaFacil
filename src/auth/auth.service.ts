@@ -5,9 +5,6 @@ import { RegisterDto } from './dto/register-auth.dto';
 import * as bcryptjs from "bcryptjs";
 import { LoginDto } from './dto/login-auth.dto';
 
-
-
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -25,7 +22,6 @@ export class AuthService {
       email,
       username,
       password: hashedPassword
-
     });
 
     return newUser;

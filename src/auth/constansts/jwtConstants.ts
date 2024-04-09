@@ -3,4 +3,4 @@ export const jwtConstants = {
   };
   
 
-  /* debe ir en una base de datos o variable de entorno*/
+  /* debe ir en una base de datos */

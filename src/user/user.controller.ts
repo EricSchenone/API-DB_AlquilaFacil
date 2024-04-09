@@ -10,7 +10,7 @@ export class UserController {
   @Post()
   create(@Body() createUserDto: UserDto) {
     return this.userService.createUser(createUserDto);
-  }*/
+  }
 
   @Get()
   async getAll(): Promise<User[]> {
@@ -23,6 +23,6 @@ export class UserController {
   })) id: string): Promise<User> {
     return this.userService.getUserById(+id);
   }
-
+*/
 
 }

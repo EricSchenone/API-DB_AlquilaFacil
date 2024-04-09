@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus, UseGuards } from '@nestjs/common';
 import { PropertyService } from './property.service';
 import { PropertyDto } from './dto/create-property.dto';
 import { Property } from './entities/property.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('property')
 export class PropertyController {
@@ -13,6 +14,7 @@ export class PropertyController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   async getPropertyById(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
     id: string
@@ -21,6 +23,7 @@ export class PropertyController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
   async createProperty(
     @Body() createPropertyDto: PropertyDto
   ): Promise<Property> {
@@ -28,6 +31,7 @@ export class PropertyController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   async deleteProperty(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
     id: string
@@ -36,6 +40,7 @@ export class PropertyController {
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   async updateProperty(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
     id: number,

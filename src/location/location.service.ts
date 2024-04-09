@@ -32,8 +32,6 @@ export class LocationService {
     };
   }
 
-
-
   async getAll(): Promise<Location[]> {
     const allLocations: Location[] = await this.locationRepository.find()
     return allLocations;

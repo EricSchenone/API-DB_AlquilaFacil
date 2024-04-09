@@ -10,26 +10,30 @@ export class PropertyService {
 
   constructor(@InjectRepository(Property)
   private readonly propertyRepository: Repository<Property>) { }
-
-  async getAll(): Promise<Property[]> {
-    try {
-      const properties: Property[] = await this.propertyRepository.find({ relations: ['users', 'booking_calendar', 'locations'] });
-      return properties;
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error al recuperar las propiedades',
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+  /*
+    async getAll(): Promise<Property[]> {
+      try {
+        const properties: Property[] = await this.propertyRepository.find({ relations: ['users', 'booking_calendar', 'locations'] });
+        return properties;
+      } catch (error) {
+        throw new HttpException(
+          {
+            status: HttpStatus.INTERNAL_SERVER_ERROR,
+            error: 'Error al recuperar las propiedades',
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
+    */
+  async getAll(): Promise<Property[]> {
+    const allProperties: Property[] = await this.propertyRepository.find()
+    return allProperties;
   }
-  
 
   async getPropertyById(id: number): Promise<Property> {
     try {
-      const criterio: FindOneOptions = { relations: ['users', 'booking_calendar', 'locations' ], where: { id_property: id } };
+      const criterio: FindOneOptions = { relations: ['users', 'booking_calendar', 'locations'], where: { id_property: id } };
       const property: Property = await this.propertyRepository.findOne(criterio);
       if (property) return property;
       throw new Error('No existe una propiedad con el id:' + id)
@@ -83,26 +87,24 @@ export class PropertyService {
       );
     }
   }
-  
+
   async deleteProperty(id: number): Promise<any> {
     try {
       const result = await this.propertyRepository.delete(id);
-      if (result.affected === 0) {
-        throw new HttpException(
-          {
-            status: HttpStatus.NOT_FOUND,
-            error: 'No existe ninguna propiedad con el ID proporcionado',
-          },
-          HttpStatus.NOT_FOUND,
-        );
-      }
+
     } catch (error) {
+      if (error instanceof QueryFailedError) {
+        throw new HttpException({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Error en la consulta a la base de datos'
+        }, HttpStatus.INTERNAL_SERVER_ERROR)
+      }
       throw new HttpException(
         {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error al eliminar la propiedad',
+          status: HttpStatus.NOT_FOUND,
+          error: 'No existe una propiedad con el id:' + id,
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_FOUND,
       );
     }
   }
