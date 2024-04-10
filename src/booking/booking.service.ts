@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { BookingDto } from './dto/create-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from './entities/booking.entity';
@@ -43,7 +43,6 @@ export class BookingService {
       const criteria: FindOneOptions = { where: { id_booking: id } };
       const booking: Booking = await this.bookingRepository.findOne(criteria);
       if (booking) return booking;
-      throw new Error('No existe una reserva con el id:' + id)
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
@@ -53,11 +52,10 @@ export class BookingService {
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
-        error: 'Error en la consulta de la reserva'
-      }, HttpStatus.BAD_REQUEST)
+        status: HttpStatus.NOT_FOUND,
+        error: 'No existe una reserva con el id:' + id
+      }, HttpStatus.NOT_FOUND)
     }
-
   }
 
   async updateBooking(id: number, bookingDto: BookingDto): Promise<Booking> {
@@ -79,13 +77,11 @@ export class BookingService {
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
+        status: HttpStatus.NOT_FOUND,
         error: 'Error en la actualizacion de la reserva, no existe un registro con el id:' + id
       },
-        HttpStatus.BAD_REQUEST)
-      
+        HttpStatus.NOT_FOUND)
     }
-
   }
 
   async deleteBooking(id: number): Promise<any> {
@@ -106,6 +102,4 @@ export class BookingService {
       }, HttpStatus.NOT_FOUND)
     }
   }
-
-
 }

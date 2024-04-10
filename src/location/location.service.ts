@@ -22,7 +22,7 @@ export class LocationService {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error en el registro en la base de datos'
+          error: 'Error en la consulta a la base de datos'
         }, HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
@@ -42,7 +42,6 @@ export class LocationService {
       const criteria: FindOneOptions = { where: { id_location: id } };
       const location: Location = await this.locationRepository.findOne(criteria)
       if (location) return location;
-      throw new Error('No existe una localidad con el id:' + id)
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
@@ -52,11 +51,10 @@ export class LocationService {
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
-        error: 'Error en la consulta de la localidad'
-      }, HttpStatus.BAD_REQUEST)
+        status: HttpStatus.NOT_FOUND,
+        error: 'No existe una localidad con el id:' + id
+      }, HttpStatus.NOT_FOUND)
     }
-
   }
 
   async updateLocation(id: number, locationDto: LocationDto): Promise<Location> {
@@ -77,13 +75,11 @@ export class LocationService {
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
+        status: HttpStatus.NOT_FOUND,
         error: 'Error en la actualizacion de la localidad, no se encuentra un registro con el id' + id
       },
-        HttpStatus.BAD_REQUEST)
-
+        HttpStatus.NOT_FOUND)
     }
-
   }
 
   async deleteLocation(id: number): Promise<any> {
@@ -103,7 +99,6 @@ export class LocationService {
         error: 'No existe un registro con el  id.' + id
       }, HttpStatus.NOT_FOUND)
     }
-
   }
 }
 

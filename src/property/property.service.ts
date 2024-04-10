@@ -36,19 +36,19 @@ export class PropertyService {
       const criterio: FindOneOptions = { relations: ['users', 'booking_calendar', 'locations'], where: { id_property: id } };
       const property: Property = await this.propertyRepository.findOne(criterio);
       if (property) return property;
-      throw new Error('No existe una propiedad con el id:' + id)
+      throw new Error()
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
-          status: HttpStatus.NOT_FOUND,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'Error en la consulta a la base de datos'
         },
-          HttpStatus.NOT_FOUND)
+          HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
-        status: HttpStatus.BAD_REQUEST,
-        error: 'Error en la consulta de la propiedad'
-      }, HttpStatus.BAD_REQUEST)
+        status: HttpStatus.NOT_FOUND,
+        error: 'No existe una propiedad con el id:' + id
+      }, HttpStatus.NOT_FOUND)
 
     }
   }
@@ -66,7 +66,6 @@ export class PropertyService {
       newProperty.setType(type);
       newProperty.setAddress(address);
       newProperty.setUrlIfrme(url_iframe);
-
       return await this.propertyRepository.save(newProperty);
     } catch (error) {
       if (error instanceof QueryFailedError) {
@@ -91,7 +90,6 @@ export class PropertyService {
   async deleteProperty(id: number): Promise<any> {
     try {
       const result = await this.propertyRepository.delete(id);
-
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
@@ -129,14 +127,14 @@ export class PropertyService {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error en la actualizacion de la rerserva en la base de datos'
+          error: 'Error en la consulta a la base de datos'
         },
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'Error al actualizar la propiedad',
+          error: 'No existe una propiedad con el id:' + id,
         },
         HttpStatus.NOT_FOUND,
       );
