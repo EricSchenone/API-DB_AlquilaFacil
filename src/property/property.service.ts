@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PropertyDto } from './dto/create-property.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Property } from './entities/property.entity';
-import { FindOneOptions, QueryFailedError, Repository } from 'typeorm';
+import {  FindOneOptions, QueryFailedError, Repository } from 'typeorm';
 
 @Injectable()
 export class PropertyService {
@@ -10,26 +10,32 @@ export class PropertyService {
 
   constructor(@InjectRepository(Property)
   private readonly propertyRepository: Repository<Property>) { }
-  /*
-    async getAll(): Promise<Property[]> {
-      try {
-        const properties: Property[] = await this.propertyRepository.find({ relations: ['users', 'booking_calendar', 'locations'] });
-        return properties;
-      } catch (error) {
-        throw new HttpException(
-          {
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
-            error: 'Error al recuperar las propiedades',
-          },
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
-    }
-    */
+
   async getAll(): Promise<Property[]> {
+    try {
+      const properties: Property[] = await this.propertyRepository.find({
+        relations: {
+          user: true,
+          booking: true,
+          location: false
+        }
+      });
+      return properties;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Error al recuperar las propiedades',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+ /* async getAll(): Promise<Property[]> {
     const allProperties: Property[] = await this.propertyRepository.find()
     return allProperties;
-  }
+  }*/
 
   async getPropertyById(id: number): Promise<Property> {
     try {
@@ -53,10 +59,11 @@ export class PropertyService {
     }
   }
 
-  async createProperty(propertyDto: PropertyDto): Promise<Property> {
+  async createProperty( propertyDto: PropertyDto): Promise<Property> {
     try {
-      const { title, description, rooms, price, images, rate, type, address, url_iframe } = propertyDto;
-      const newProperty: Property = new Property(title, description, rooms, price, images, rate, type, address, url_iframe);
+ 
+      const { title, description, rooms, price, images, rate, type, address, url_iframe, id_user, id_booking, id_location } = propertyDto;
+      const newProperty: Property = new Property(title, description, rooms, price, images, rate, type, address, url_iframe, id_user, id_booking, id_location);
       newProperty.setTitle(title);
       newProperty.setDescription(description);
       newProperty.setRooms(rooms);
@@ -66,6 +73,9 @@ export class PropertyService {
       newProperty.setType(type);
       newProperty.setAddress(address);
       newProperty.setUrlIfrme(url_iframe);
+      newProperty.setUserId(id_user);
+      newProperty.setLocationId(id_location);
+      newProperty.setBookingId(id_booking);
       return await this.propertyRepository.save(newProperty);
     } catch (error) {
       if (error instanceof QueryFailedError) {

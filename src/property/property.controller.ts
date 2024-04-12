@@ -8,10 +8,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class PropertyController {
   constructor(private readonly propertyService: PropertyService) { }
 
-  @Get()
-  async getAll(): Promise<Property[]> {
-    return this.propertyService.getAll();
-  }
 
   @Get(':id')
   @UseGuards(AuthGuard)
@@ -22,9 +18,14 @@ export class PropertyController {
     return this.propertyService.getPropertyById(+id);
   }
 
+  @Get()
+  async getAllByCriteria(): Promise<Property[]> {
+    return this.propertyService.getAll()
+  }
+
   @Post()
   @UseGuards(AuthGuard)
-  async createProperty(
+  async createProperty( id_user: number,
     @Body() createPropertyDto: PropertyDto
   ): Promise<Property> {
     return this.propertyService.createProperty(createPropertyDto);

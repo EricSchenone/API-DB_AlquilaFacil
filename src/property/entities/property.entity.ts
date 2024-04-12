@@ -35,19 +35,27 @@ export class Property {
     @Column({ length: 200 })
     private url_iframe: string;
 
+    @Column({ nullable: true })
+    private id_user : number;
+
+    @Column({ nullable:true })
+    private id_booking : number;
+
+    @Column({ nullable: true })
+    private id_location : number;
+
     @ManyToOne(() => User,
         user => user.properties)
-      
-     @JoinColumn()
-       user: User;
-    
-    @OneToOne (() => Booking)
-    @JoinColumn()
-    booking : Booking;
+    @JoinColumn({ name: 'id_user' })
+    user: User;
 
-    @OneToOne (() => Location)
+    @OneToOne(() => Booking)
     @JoinColumn()
-    location : Location;
+    booking: Booking;
+
+    @OneToOne(() => Location)
+    @JoinColumn()
+    location: Location;
 
     constructor(
         title: string,
@@ -58,7 +66,11 @@ export class Property {
         rate: number,
         type: string,
         address: string,
-        url_iframe: string) {
+        url_iframe: string,
+        id_user: number,
+        id_location: number,
+        id_booking: number
+    ) {
         this.title = title;
         this.description = description;
         this.rooms = rooms;
@@ -68,13 +80,15 @@ export class Property {
         this.type = type;
         this.address = address;
         this.url_iframe = url_iframe;
+        this.id_user = id_user
+        this.id_booking = id_booking,
+        this.id_location = id_location
     }
 
     getId(): number { return this.id_property };
 
     getTitle(): string { return this.title };
     setTitle(title: string): void { this.title = title }
-
 
     getDescription(): string { return this.description };
     setDescription(description: string): void { this.description = description };
@@ -100,4 +114,13 @@ export class Property {
     getUrlIframe(): string { return this.url_iframe };
     setUrlIfrme(url_iframe: string): void { this.url_iframe = url_iframe };
 
+    getUserId(): number { return this.id_user };
+    setUserId( id_user: number): void { this.id_user = id_user}
+
+    getLocationId(): number { return this.id_location };
+    setLocationId( id_location: number): void { this.id_location = id_location}
+
+    getBookingId(): number { return this.id_booking };
+    setBookingId( id_booking: number): void { this.id_booking = id_booking}
+    
 }
