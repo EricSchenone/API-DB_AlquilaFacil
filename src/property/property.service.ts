@@ -17,7 +17,7 @@ export class PropertyService {
         relations: {
           user: true,
           booking: true,
-          location: false
+          location: true
         }
       });
       return properties;
@@ -42,7 +42,7 @@ export class PropertyService {
       const criterio: FindOneOptions = { relations: ['users', 'booking_calendar', 'locations'], where: { id_property: id } };
       const property: Property = await this.propertyRepository.findOne(criterio);
       if (property) return property;
-      throw new Error()
+      
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
@@ -60,8 +60,10 @@ export class PropertyService {
   }
 
   async createProperty( propertyDto: PropertyDto): Promise<Property> {
+    console.log(propertyDto);
     try {
- 
+      console.log(propertyDto.images);
+      
       const { title, description, rooms, price, images, rate, type, address, url_iframe, id_user, id_booking, id_location } = propertyDto;
       const newProperty: Property = new Property(title, description, rooms, price, images, rate, type, address, url_iframe, id_user, id_booking, id_location);
       newProperty.setTitle(title);

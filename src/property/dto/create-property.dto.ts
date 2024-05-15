@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsArray, IsNumber, IsString } from "class-validator";
 
 export class PropertyDto {
     @IsString()
@@ -13,7 +13,8 @@ export class PropertyDto {
     @IsNumber()
     readonly price: number;
     
-    @IsString()
+    
+    @IsString({ each: true })
     readonly images: string[];
     
     @IsNumber()

@@ -20,7 +20,7 @@ export class Property {
     @Column({ type: 'int', width: 10 })
     private price: number;
 
-    @Column({ type: 'simple-array', nullable: true })//la columna puede tener valores nulos
+    @Column({ type: 'json', nullable: true })//la columna puede tener valores nulos
     private images: string[];
 
     @Column({ type: 'tinyint' })
@@ -46,7 +46,7 @@ export class Property {
 
     @ManyToOne(() => User,
         user => user.properties)
-    @JoinColumn({ name: 'id_user' })
+    @JoinColumn()
     user: User;
 
     @OneToOne(() => Booking)

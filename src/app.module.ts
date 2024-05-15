@@ -6,8 +6,8 @@ import { PropertyModule } from './property/property.module';
 import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
 import { BookingModule } from './booking/booking.module';
-import { PropertiesUsersModule } from './properties_users/properties_users.module';
 import { AuthModule } from './auth/auth.module';
+import { MercadoPagoModule } from './mercado_pago/mercado_pago.module';
 
 @Module({
   imports: [
@@ -22,13 +22,13 @@ import { AuthModule } from './auth/auth.module';
         'dist/**/**.entity{.ts,.js}' 
       ],
       synchronize: true
-    }),
+    }), 
     PropertyModule,
     UserModule,
     LocationModule,
     BookingModule,
-    PropertiesUsersModule,
     AuthModule,
+    MercadoPagoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
