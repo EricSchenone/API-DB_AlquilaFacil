@@ -12,10 +12,11 @@ export class BookingService {
 
   async createBooking(bookingDto: BookingDto): Promise<Booking> {
     try {
-      const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.status);
+      const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.id_property, bookingDto.status);
       newBooking.setDate(bookingDto.date);
       newBooking.setDateInit(bookingDto.date_init);
       newBooking.setDateFinish(bookingDto.date_finish);
+      newBooking.setPropertyId(bookingDto.id_property);
       newBooking.setStatus(bookingDto.status);
       const savedBooking: Booking = await this.bookingRepository.create(newBooking);
       if (savedBooking.getIdBooking()) return newBooking;
@@ -34,7 +35,12 @@ export class BookingService {
   }
 
   async getAll(): Promise<Booking[]> {
-    const bookings: Booking[] = await this.bookingRepository.find();
+    const bookings: Booking[] = await this.bookingRepository.find({
+      relations: {
+        property: true,
+        preference: true
+      }
+    });
     return bookings;
   }
 

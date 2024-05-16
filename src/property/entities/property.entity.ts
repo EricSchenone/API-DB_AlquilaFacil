@@ -1,7 +1,7 @@
 import { Booking } from "src/booking/entities/booking.entity";
 import { Location } from "src/location/entities/location.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, OneToOne, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, JoinColumn, ManyToOne, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity('properties')
 export class Property {
@@ -38,24 +38,23 @@ export class Property {
     @Column({ nullable: true })
     private id_user : number;
 
-    @Column({ nullable:true })
-    private id_booking : number;
+    @Column({ nullable: true })
+    id_booking : number;
 
     @Column({ nullable: true })
     private id_location : number;
 
-    @ManyToOne(() => User,
-        user => user.properties)
-    @JoinColumn()
+    @ManyToOne(() => User, user => user.properties)
+    @JoinColumn({ name: 'id_user', referencedColumnName: 'id_user' })
     user: User;
-
-    @OneToOne(() => Booking)
-    @JoinColumn()
-    booking: Booking;
+ 
+    @OneToMany(() => Booking, (booking) => booking.id_property)
+    @JoinColumn({ name: 'id_property', referencedColumnName: 'id_property' })
+    booking: Booking[];
 
     @OneToOne(() => Location)
-    @JoinColumn()
-    location: Location;
+    @JoinColumn({ name: 'id_location', referencedColumnName: 'id_location' })
+    location: Location; 
 
     constructor(
         title: string,
@@ -102,7 +101,7 @@ export class Property {
     getImages(): string[] { return this.images };
     setImages(images: string[]): void { this.images = images };
 
-    getRate(): number { return this, this.rate };
+    getRate(): number { return this.rate };
     setRate(rate: number): void { this.rate = rate };
 
     getType(): string { return this.type };

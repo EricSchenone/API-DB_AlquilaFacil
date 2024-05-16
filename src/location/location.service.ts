@@ -16,7 +16,7 @@ export class LocationService {
       newLocation.setCountry(locationDto.country);
       newLocation.setState(locationDto.state);
       newLocation.setCity(locationDto.city);
-      const savedlocation: Location = await this.locationRepository.create(newLocation);
+      const savedlocation: Location = await this.locationRepository.save(newLocation);
       if (savedlocation.getIdLocation()) return newLocation;
     } catch (error) {
       if (error instanceof QueryFailedError) {

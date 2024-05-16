@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity('preferences_MP')
+@Entity('preferences_mp')
 export class MercadoPago {
     @PrimaryGeneratedColumn()
     private id_preference: number;
@@ -20,6 +20,6 @@ export class MercadoPago {
         this.quantity = quantity;
         this.unit_price = unit_price;
 
-    }
+    } 
 
 }

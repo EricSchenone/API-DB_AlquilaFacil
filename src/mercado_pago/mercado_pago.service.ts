@@ -46,4 +46,3 @@ export class MercadoPagoService {
     return allPreferences;
   }
 }
-

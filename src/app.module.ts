@@ -28,7 +28,7 @@ import { MercadoPagoModule } from './mercado_pago/mercado_pago.module';
     LocationModule,
     BookingModule,
     AuthModule,
-    MercadoPagoModule,
+    MercadoPagoModule 
   ],
   controllers: [AppController],
   providers: [AppService],

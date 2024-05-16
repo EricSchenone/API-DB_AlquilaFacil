@@ -1,4 +1,4 @@
-import { IsDate, IsBoolean } from 'class-validator';
+import { IsDate, IsBoolean, IsNumber } from 'class-validator';
 
 export class BookingDto {
     @IsDate()
@@ -9,6 +9,9 @@ export class BookingDto {
 
     @IsDate()
     readonly date_finish: Date;
+
+    @IsNumber()
+    readonly id_property: number;
 
     @IsBoolean()
     readonly status: boolean;

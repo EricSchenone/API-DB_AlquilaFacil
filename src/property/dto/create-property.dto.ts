@@ -13,7 +13,6 @@ export class PropertyDto {
     @IsNumber()
     readonly price: number;
     
-    
     @IsString({ each: true })
     readonly images: string[];
     
@@ -25,7 +24,7 @@ export class PropertyDto {
     
     @IsString()
     readonly address: string;
-    
+     
     @IsString()
     readonly url_iframe: string;
     

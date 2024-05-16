@@ -13,6 +13,7 @@ export class Location {
     
     @Column({ length: 50 })
     private city: string
+    
 
 
     constructor(country: string, state: string, city: string) {

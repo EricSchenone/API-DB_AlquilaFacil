@@ -28,9 +28,6 @@ export class PropertyController {
   async createProperty( id_user: number,
     @Body() createPropertyDto: PropertyDto
   ): Promise<Property> {
-    console.log(createPropertyDto);
-    console.log(id_user);
-    
     return this.propertyService.createProperty(createPropertyDto);
   }
 

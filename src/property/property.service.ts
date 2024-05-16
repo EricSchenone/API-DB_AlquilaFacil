@@ -16,7 +16,7 @@ export class PropertyService {
       const properties: Property[] = await this.propertyRepository.find({
         relations: {
           user: true,
-          booking: true,
+          //booking: true,
           location: true
         }
       });
@@ -31,11 +31,6 @@ export class PropertyService {
       );
     }
   }
-
- /* async getAll(): Promise<Property[]> {
-    const allProperties: Property[] = await this.propertyRepository.find()
-    return allProperties;
-  }*/
 
   async getPropertyById(id: number): Promise<Property> {
     try {
@@ -73,7 +68,7 @@ export class PropertyService {
       newProperty.setImages(images);
       newProperty.setRate(rate);
       newProperty.setType(type);
-      newProperty.setAddress(address);
+      newProperty.setAddress(address); 
       newProperty.setUrlIfrme(url_iframe);
       newProperty.setUserId(id_user);
       newProperty.setLocationId(id_location);
@@ -84,7 +79,7 @@ export class PropertyService {
         throw new HttpException(
           {
             status: HttpStatus.INTERNAL_SERVER_ERROR,
-            error: 'Error en el registro en la base de datos',
+            error: 'Error en el registro en la base de datos' + error,
           },
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
