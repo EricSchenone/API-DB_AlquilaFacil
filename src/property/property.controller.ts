@@ -47,6 +47,8 @@ export class PropertyController {
     id: number,
     @Body() property: PropertyDto,
   ): Promise<Property> {
+    console.log(id, property);
+    
     return this.propertyService.updateProperty(id, property);
   }
 }

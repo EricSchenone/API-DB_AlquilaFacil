@@ -23,7 +23,7 @@ export class Property {
     @Column({ type: 'json', nullable: true })//la columna puede tener valores nulos
     private images: string[];
 
-    @Column({ type: 'tinyint' })
+    @Column({ type: 'int2' })
     private rate: number;
 
     @Column({ length: 50 })
@@ -52,7 +52,7 @@ export class Property {
     @JoinColumn({ name: 'id_property', referencedColumnName: 'id_property' })
     booking: Booking[];
 
-    @OneToOne(() => Location)
+    @ManyToOne(() => Location)
     @JoinColumn({ name: 'id_location', referencedColumnName: 'id_location' })
     location: Location; 
 

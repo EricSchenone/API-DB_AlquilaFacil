@@ -9,19 +9,21 @@ import { BookingModule } from './booking/booking.module';
 import { AuthModule } from './auth/auth.module';
 import { MercadoPagoModule } from './mercado_pago/mercado_pago.module';
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot( {
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
+      type: 'cockroachdb',
+      host:'alquila-facil-2244.g8x.gcp-southamerica-east1.cockroachlabs.cloud',
+      port: 26257,
+      ssl: true,
       database: 'alquila_facil',
+      username: 'alquila_facil',
+      password: '0qStCcTCeTyuhvUIvPNOKQ',
       entities: [
         'dist/**/**.entity{.ts,.js}' 
       ],
-      synchronize: true
+      synchronize: true 
     }), 
     PropertyModule,
     UserModule,
