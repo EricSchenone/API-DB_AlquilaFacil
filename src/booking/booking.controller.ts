@@ -11,6 +11,8 @@ export class BookingController {
   async createBooking(
     @Body() booking: BookingDto
   ): Promise<Booking> {
+    console.log(booking);
+    
     return this.bookingService.createBooking(booking)
   }
 

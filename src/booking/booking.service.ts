@@ -11,20 +11,25 @@ export class BookingService {
   private readonly bookingRepository: Repository<Booking>) { }
 
   async createBooking(bookingDto: BookingDto): Promise<Booking> {
+    console.log(bookingDto);
+    
     try {
-      const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.id_property, bookingDto.status);
+      const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.id_property, bookingDto.status, bookingDto.id_preference);
       newBooking.setDate(bookingDto.date);
       newBooking.setDateInit(bookingDto.date_init);
       newBooking.setDateFinish(bookingDto.date_finish);
       newBooking.setPropertyId(bookingDto.id_property);
       newBooking.setStatus(bookingDto.status);
-      const savedBooking: Booking = await this.bookingRepository.create(newBooking);
+      newBooking.setPreferenceId(bookingDto.id_preference);
+      const savedBooking: Booking = await this.bookingRepository.save(newBooking);
+      console.log(savedBooking.getIdBooking());
+      
       if (savedBooking.getIdBooking()) return newBooking;
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error en el registro en la base de datos'
+          error: 'Error en el registro en la base de datos' + error
         }, HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({

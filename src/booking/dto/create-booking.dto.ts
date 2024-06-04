@@ -2,19 +2,21 @@ import { IsDate, IsBoolean, IsNumber } from 'class-validator';
 import { Timestamp } from 'typeorm';
 
 export class BookingDto {
-    @IsDate()
-    readonly date: Timestamp;
+    @IsNumber()
+    readonly date: number;
 
-    @IsDate()
-    readonly date_init: Timestamp;
+    @IsNumber()
+    readonly date_init: number;
 
-    @IsDate()
-    readonly date_finish: Timestamp;
+    @IsNumber()
+    readonly date_finish: number;
 
     @IsNumber()
     readonly id_property: number;
 
     @IsBoolean()
     readonly status: boolean;
+
+    readonly id_preference: string;
 
 }

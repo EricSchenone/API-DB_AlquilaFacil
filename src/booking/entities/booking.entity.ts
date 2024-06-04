@@ -8,14 +8,14 @@ export class Booking {
     @PrimaryGeneratedColumn()
     private id_booking: number;
 
-    @Column({ type: 'timestamp' })
-    private date: Timestamp;
+    @Column()
+    private date: number;
 
-    @Column({ type: 'timestamp' })
-    private date_init: Timestamp;
+    @Column()
+    private date_init: number;
 
-    @Column({ type: 'timestamp' })
-    private date_finish: Timestamp;
+    @Column()
+    private date_finish: number;
 
     @Column()
     id_property: number;
@@ -24,7 +24,7 @@ export class Booking {
     private status: boolean;
 
     @Column()
-    id_preference: number;
+    id_preference: string;
 
     @ManyToOne(() => Property, (property) => property.id_booking)
     @JoinColumn({ name: 'id_property', referencedColumnName: 'id_property' })
@@ -34,30 +34,34 @@ export class Booking {
     @JoinColumn({ name: 'id_preference', referencedColumnName: 'id_preference'})
     preference: Preference;
 
-    constructor(date: Timestamp, date_init: Timestamp, date_finish: Timestamp, id_property: number, status: boolean) {
+    constructor(date: number, date_init: number, date_finish: number, id_property: number, status: boolean, id_preference: string) {
         this.date = date;
         this.date_init = date_init;
         this.date_finish = date_finish;
         this.id_property = id_property;
         this.status = status;
+        this.id_preference = id_preference;
     }
 
     getIdBooking(): number { return this.id_booking };
 
-    getDate(): Timestamp { return this.date };
-    setDate(date: Timestamp): void { this.date = date };
+    getDate(): number { return this.date };
+    setDate(date: number): void { this.date = date };
 
-    getDateInit(): Timestamp { return this.date_init };
-    setDateInit(dateInit: Timestamp): void { this.date_init = dateInit };
+    getDateInit(): number { return this.date_init };
+    setDateInit(dateInit: number): void { this.date_init = dateInit };
 
-    getDateFinish(): Timestamp { return this.date_finish };
-    setDateFinish(dateFinish: Timestamp): void { this.date_finish = dateFinish };
+    getDateFinish(): number { return this.date_finish };
+    setDateFinish(dateFinish: number): void { this.date_finish = dateFinish };
 
     getPropertyId(): number { return this. id_property};
     setPropertyId( id_property: number): void { this.id_property = id_property };
 
     getStatus(): boolean { return this.status };
     setStatus(status: boolean): void { this.status = status };
+
+    getPreferenceId(): string { return this.id_preference };
+    setPreferenceId( id_preference : string): void { this.id_preference = id_preference }
 
 }
 

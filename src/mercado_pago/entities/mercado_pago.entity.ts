@@ -1,10 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('preferences_mp')
 export class MercadoPago {
-    @PrimaryGeneratedColumn()
-    private id_preference: number;
+    @PrimaryColumn()
+     id_preference: string;
     
     @Column({ nullable: true })
     private title: string;

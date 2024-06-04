@@ -33,10 +33,12 @@ export class MercadoPagoService {
         ],
       }
     })
-    console.log(res);
+   
     
     const newPreference: MercadoPago = new MercadoPago(mercadoPagoDto.title, mercadoPagoDto.quantity, mercadoPagoDto.unit_price);
+    newPreference.id_preference = res.id;
     await this.repositoryMercadoPago.save(newPreference);
+
 
     return { id: res.id };
   }

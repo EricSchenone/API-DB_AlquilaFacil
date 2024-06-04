@@ -8,6 +8,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   const corsOptions: CorsOptions = {
+    //origin: 'https://alquilafacil-5e48c.web.app/',
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
