@@ -6,7 +6,7 @@ import { Column, Entity, OneToOne, JoinColumn, ManyToOne, PrimaryGeneratedColumn
 @Entity('properties')
 export class Property {
     @PrimaryGeneratedColumn()
-    private id_property: number;
+    id_property: number;
 
     @Column({ length: 150 })
     private title: string;
@@ -39,9 +39,6 @@ export class Property {
     private id_user : number;
 
     @Column({ nullable: true })
-    id_booking : number;
-
-    @Column({ nullable: true })
     private id_location : number;
 
     @ManyToOne(() => User, user => user.properties)
@@ -67,8 +64,7 @@ export class Property {
         address: string,
         url_iframe: string,
         id_user: number,
-        id_location: number,
-        id_booking: number
+        id_location: number
     ) {
         this.title = title;
         this.description = description;
@@ -79,9 +75,8 @@ export class Property {
         this.type = type;
         this.address = address;
         this.url_iframe = url_iframe;
-        this.id_user = id_user
-        this.id_booking = id_booking,
-        this.id_location = id_location
+        this.id_user = id_user;
+        this.id_location = id_location;
     }
 
     getId(): number { return this.id_property };
@@ -118,8 +113,5 @@ export class Property {
 
     getLocationId(): number { return this.id_location };
     setLocationId( id_location: number): void { this.id_location = id_location}
-
-    getBookingId(): number { return this.id_booking };
-    setBookingId( id_booking: number): void { this.id_booking = id_booking}
     
 }
