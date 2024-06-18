@@ -33,8 +33,5 @@ export class PropertyDto {
     
     @IsNumber()
     readonly id_location: number;
-    
-    @IsNumber()
-    readonly id_booking: number;
   
 }

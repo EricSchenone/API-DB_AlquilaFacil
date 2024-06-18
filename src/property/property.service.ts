@@ -128,6 +128,7 @@ export class PropertyService {
       propertyToUpdate.setType(propertyDto.type);
       propertyToUpdate.setAddress(propertyDto.address);
       propertyToUpdate.setUrlIfrme(propertyDto.url_iframe);
+      propertyToUpdate.setLocationId(propertyDto.id_location);
       return await this.propertyRepository.save(propertyToUpdate);
     } catch (error) {
       if (error instanceof QueryFailedError) {
