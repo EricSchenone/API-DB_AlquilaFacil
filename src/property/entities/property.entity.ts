@@ -36,10 +36,14 @@ export class Property {
     private url_iframe: string;
 
     @Column({ nullable: true })
+    private status: string;
+
+    @Column({ nullable: true })
     private id_user : number;
 
     @Column({ nullable: true })
     private id_location : number;
+
 
     @ManyToOne(() => User, user => user.properties)
     @JoinColumn({ name: 'id_user', referencedColumnName: 'id_user' })
@@ -63,6 +67,7 @@ export class Property {
         type: string,
         address: string,
         url_iframe: string,
+        status: string,
         id_user: number,
         id_location: number
     ) {
@@ -75,6 +80,7 @@ export class Property {
         this.type = type;
         this.address = address;
         this.url_iframe = url_iframe;
+        this.status = status;
         this.id_user = id_user;
         this.id_location = id_location;
     }
@@ -107,6 +113,9 @@ export class Property {
 
     getUrlIframe(): string { return this.url_iframe };
     setUrlIfrme(url_iframe: string): void { this.url_iframe = url_iframe };
+
+    getStatus(): string { return this.status };
+    setStatus( status: string) { this.status = status };
 
     getUserId(): number { return this.id_user };
     setUserId( id_user: number): void { this.id_user = id_user}

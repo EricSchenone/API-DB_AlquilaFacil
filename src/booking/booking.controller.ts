@@ -29,6 +29,13 @@ export class BookingController {
     return this.bookingService.getBookingById(+id);
   }
 
+  @Get('/byPreference/:id_preference')
+  async getBookingByPreference(
+    @Param('id_preference') id_preference: string
+  ): Promise<Booking> {
+    return this.bookingService.getBookingByPreference(id_preference);
+  }
+
   @Put(':id')
   async updateBooking(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))

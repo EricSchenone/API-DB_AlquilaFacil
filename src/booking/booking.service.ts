@@ -12,7 +12,7 @@ export class BookingService {
 
   async createBooking(bookingDto: BookingDto): Promise<Booking> {
     console.log(bookingDto);
-    
+
     try {
       const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.id_property, bookingDto.status, bookingDto.id_preference);
       newBooking.setDate(bookingDto.date);
@@ -23,7 +23,7 @@ export class BookingService {
       newBooking.setPreferenceId(bookingDto.id_preference);
       const savedBooking: Booking = await this.bookingRepository.save(newBooking);
       console.log(savedBooking.getIdBooking());
-      
+
       if (savedBooking.getIdBooking()) return newBooking;
     } catch (error) {
       if (error instanceof QueryFailedError) {
@@ -66,6 +66,29 @@ export class BookingService {
         status: HttpStatus.NOT_FOUND,
         error: 'No existe una reserva con el id:' + id
       }, HttpStatus.NOT_FOUND)
+    }
+  }
+
+  async getBookingByPreference(id_preference: string): Promise<Booking> {
+    try {
+      const criteria: FindOneOptions<Booking> = { where: { id_preference } };
+      const booking: Booking = await this.bookingRepository.findOne(criteria);
+      if (booking) {
+        return booking;
+      } else {
+        throw new HttpException({
+          status: HttpStatus.NOT_FOUND,
+          error: 'No existe una reserva con el id: ' + id_preference
+        }, HttpStatus.NOT_FOUND);
+      }
+    } catch (error) {
+      if (error instanceof QueryFailedError) {
+        throw new HttpException({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Error en la consulta a la base de datos'
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+      throw error;
     }
   }
 

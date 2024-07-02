@@ -9,14 +9,17 @@ export class MercadoPagoController {
     private readonly mercadoPagoService: MercadoPagoService,
   ) { }
 
-  @Get()
-  async getAll(): Promise<MercadoPago[]> {
-    return this.mercadoPagoService.getAll()
-  }
-
+  
   @Post('/create_preference')
   async createPreference(@Body() mercadoPagoDto: MercadoPagoDto): Promise<string> { 
     const preferenceId = await this.mercadoPagoService.createPreference(mercadoPagoDto);
     return preferenceId;
   }
+
+  @Get()
+  async getAll(): Promise<MercadoPago[]> {
+    return this.mercadoPagoService.getAll()
+  }
+
+  
 }

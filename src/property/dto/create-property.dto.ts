@@ -27,6 +27,9 @@ export class PropertyDto {
      
     @IsString()
     readonly url_iframe: string;
+
+    @IsString()
+    readonly status: string;
     
     @IsNumber()
     readonly id_user: number;

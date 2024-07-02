@@ -1,4 +1,4 @@
-import { IsDate, IsBoolean, IsNumber } from 'class-validator';
+import { IsDate, IsBoolean, IsNumber, IsString } from 'class-validator';
 import { Timestamp } from 'typeorm';
 
 export class BookingDto {
@@ -17,6 +17,7 @@ export class BookingDto {
     @IsBoolean()
     readonly status: boolean;
 
+    @IsString()
     readonly id_preference: string;
 
 }

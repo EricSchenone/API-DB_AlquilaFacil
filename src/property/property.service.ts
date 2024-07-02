@@ -59,8 +59,8 @@ export class PropertyService {
     try {
       console.log(propertyDto.images);
       
-      const { title, description, rooms, price, images, rate, type, address, url_iframe, id_user, id_location } = propertyDto;
-      const newProperty: Property = new Property(title, description, rooms, price, images, rate, type, address, url_iframe, id_user, id_location);
+      const { title, description, rooms, price, images, rate, type, address, url_iframe, status, id_user, id_location } = propertyDto;
+      const newProperty: Property = new Property(title, description, rooms, price, images, rate, type, address, url_iframe, status, id_user, id_location);
       newProperty.setTitle(title);
       newProperty.setDescription(description);
       newProperty.setRooms(rooms);
@@ -70,6 +70,7 @@ export class PropertyService {
       newProperty.setType(type);
       newProperty.setAddress(address); 
       newProperty.setUrlIfrme(url_iframe);
+      newProperty.setStatus(status);
       newProperty.setUserId(id_user);
       newProperty.setLocationId(id_location);
       return await this.propertyRepository.save(newProperty);
