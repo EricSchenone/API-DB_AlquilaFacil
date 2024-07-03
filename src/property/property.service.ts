@@ -16,7 +16,7 @@ export class PropertyService {
       const properties: Property[] = await this.propertyRepository.find({
         relations: {
           user: true,
-          //booking: true,
+          booking: true,
           location: true
         }
       });
@@ -34,9 +34,11 @@ export class PropertyService {
 
   async getPropertyById(id: number): Promise<Property> {
     try {
-      const criterio: FindOneOptions = { relations: ['users', 'booking_calendar', 'locations'], where: { id_property: id } };
+      const criterio: FindOneOptions = { relations: ['user', 'booking', 'location'], where: { id_property: id } };
+      console.log(criterio);
+      
       const property: Property = await this.propertyRepository.findOne(criterio);
-      if (property) return property;
+      if (property) return property; 
       
     } catch (error) {
       if (error instanceof QueryFailedError) {
@@ -48,7 +50,7 @@ export class PropertyService {
       };
       throw new HttpException({
         status: HttpStatus.NOT_FOUND,
-        error: 'No existe una propiedad con el id:' + id
+        error: 'No existe una propiedad con el idddddddd:' + id + error
       }, HttpStatus.NOT_FOUND)
 
     }
@@ -63,8 +65,8 @@ export class PropertyService {
       const newProperty: Property = new Property(title, description, rooms, price, images, rate, type, address, url_iframe, status, id_user, id_location);
       newProperty.setTitle(title);
       newProperty.setDescription(description);
-      newProperty.setRooms(rooms);
-      newProperty.setPrice(price);
+      newProperty.setRooms(Number(rooms));
+      newProperty.setPrice(Number(price));
       newProperty.setImages(images);
       newProperty.setRate(rate);
       newProperty.setType(type);
@@ -73,6 +75,8 @@ export class PropertyService {
       newProperty.setStatus(status);
       newProperty.setUserId(id_user);
       newProperty.setLocationId(id_location);
+      console.log(newProperty);
+      
       return await this.propertyRepository.save(newProperty);
     } catch (error) {
       if (error instanceof QueryFailedError) {
@@ -129,9 +133,11 @@ export class PropertyService {
       propertyToUpdate.setType(propertyDto.type);
       propertyToUpdate.setAddress(propertyDto.address);
       propertyToUpdate.setUrlIfrme(propertyDto.url_iframe);
+      propertyToUpdate.setStatus(propertyDto.status);
       propertyToUpdate.setLocationId(propertyDto.id_location);
       return await this.propertyRepository.save(propertyToUpdate);
     } catch (error) {
+
       if (error instanceof QueryFailedError) {
         throw new HttpException({
           status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -139,10 +145,11 @@ export class PropertyService {
         },
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
+
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'No existe una propiedad con el id:' + id,
+          error: 'No existe una propiedad con el idddddddddddddddddddd:' + id + error,
         },
         HttpStatus.NOT_FOUND,
       );

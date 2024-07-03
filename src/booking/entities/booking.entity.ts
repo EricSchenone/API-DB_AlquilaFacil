@@ -26,7 +26,7 @@ export class Booking {
     @Column()
     id_preference: string;
 
-    @ManyToOne(() => Property, (property) => property.id_property)
+    @ManyToOne(() => Property, (property) => property.booking)
     @JoinColumn({ name: 'id_property', referencedColumnName: 'id_property' })
     property: Property;
 

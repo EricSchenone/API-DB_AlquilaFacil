@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus, UseGuards, Patch } from '@nestjs/common';
 import { PropertyService } from './property.service';
 import { PropertyDto } from './dto/create-property.dto';
 import { Property } from './entities/property.entity';
@@ -8,6 +8,13 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class PropertyController {
   constructor(private readonly propertyService: PropertyService) { }
 
+  @Post()
+  @UseGuards(AuthGuard)
+  async createProperty(id_user: number,
+    @Body() createPropertyDto: PropertyDto
+  ): Promise<Property> {
+    return this.propertyService.createProperty(createPropertyDto);
+  }
 
   @Get(':id')
   @UseGuards(AuthGuard)
@@ -23,12 +30,23 @@ export class PropertyController {
     return this.propertyService.getAll()
   }
 
-  @Post()
+  @Put(':id')
   @UseGuards(AuthGuard)
-  async createProperty( id_user: number,
-    @Body() createPropertyDto: PropertyDto
+  async updateProperty(
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+    id: number,
+    @Body() property: PropertyDto,
   ): Promise<Property> {
-    return this.propertyService.createProperty(createPropertyDto);
+    return this.propertyService.updateProperty(id, property);
+  }
+
+  @Patch('/partial/:id')
+  async updatePartialProeprty(
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+    id: number,
+    @Body() property: PropertyDto,
+  ): Promise<Property> {
+    return this.propertyService.updateProperty(id, property);
   }
 
   @Delete(':id')
@@ -38,17 +56,5 @@ export class PropertyController {
     id: string
   ): Promise<void> {
     return this.propertyService.deleteProperty(+id);
-  }
-
-  @Put(':id')
-  @UseGuards(AuthGuard)
-  async updateProperty(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
-    id: number,
-    @Body() property: PropertyDto,
-  ): Promise<Property> {
-    console.log(id, property);
-    
-    return this.propertyService.updateProperty(id, property);
   }
 }

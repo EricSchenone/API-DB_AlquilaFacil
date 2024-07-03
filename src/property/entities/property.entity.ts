@@ -49,7 +49,7 @@ export class Property {
     @JoinColumn({ name: 'id_user', referencedColumnName: 'id_user' })
     user: User;
  
-    @OneToMany(() => Booking, (booking) => booking.id_property)
+    @OneToMany(() => Booking, (booking) => booking.property)
     @JoinColumn({ name: 'id_property', referencedColumnName: 'id_property' })
     booking: Booking[];
 
@@ -118,9 +118,9 @@ export class Property {
     setStatus( status: string) { this.status = status };
 
     getUserId(): number { return this.id_user };
-    setUserId( id_user: number): void { this.id_user = id_user}
+    setUserId( id_user: number): void { this.id_user = id_user};
 
     getLocationId(): number { return this.id_location };
-    setLocationId( id_location: number): void { this.id_location = id_location}
+    setLocationId( id_location: number): void { this.id_location = id_location};
     
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Booking } from "src/booking/entities/booking.entity";
+import { Column, Entity, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('preferences_mp')
@@ -14,6 +15,9 @@ export class MercadoPago {
 
     @Column({ nullable: true })
     private unit_price: number;
+
+    @OneToOne(() => Booking, booking => booking.preference)
+    booking: Booking;
 
     constructor(title: string, quantity: number, unit_price: number) {
         this.title = title;

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus, Patch } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { BookingDto } from './dto/create-booking.dto';
 import { Booking } from './entities/booking.entity';
+
 
 @Controller('booking')
 export class BookingController {

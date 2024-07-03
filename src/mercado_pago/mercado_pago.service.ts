@@ -33,12 +33,12 @@ export class MercadoPagoService {
           }
         ],
         back_urls: {
-          success: "https://e667-160-238-169-216.ngrok-free.app/payments",
+          success: "https://9e4c-160-238-169-164.ngrok-free.app/payments",
           failure: "http://localhost:5173",
           pending: "http://localhost:5173"
         },
         auto_return: "approved",
-        notification_url: "https://e667-160-238-169-216.ngrok-free.app/payments",
+        notification_url: "https://9e4c-160-238-169-164.ngrok-free.app/payments",
       }
     })
     console.log(res);

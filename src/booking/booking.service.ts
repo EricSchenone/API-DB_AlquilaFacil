@@ -3,6 +3,7 @@ import { BookingDto } from './dto/create-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from './entities/booking.entity';
 import { FindOneOptions, QueryFailedError, Repository } from 'typeorm';
+ 
 
 @Injectable()
 export class BookingService {
@@ -94,7 +95,7 @@ export class BookingService {
 
   async updateBooking(id: number, bookingDto: BookingDto): Promise<Booking> {
     try {
-      const criteria: FindOneOptions = { where: { booking_id: id } };
+      const criteria: FindOneOptions = { where: { id_booking: id } };
       let updateBooking: Booking = await this.bookingRepository.findOne(criteria);
       updateBooking.setDate(bookingDto.date);
       updateBooking.setDateInit(bookingDto.date_init);
@@ -105,14 +106,14 @@ export class BookingService {
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          status: HttpStatus.INTERNAL_SERVER_ERROR, 
           error: 'Error en la actualizacion de la rerserva en la base de datos'
         },
           HttpStatus.INTERNAL_SERVER_ERROR)
       };
       throw new HttpException({
         status: HttpStatus.NOT_FOUND,
-        error: 'Error en la actualizacion de la reserva, no existe un registro con el id:' + id
+        error: 'Error en la actualizacion de la reserva, no existe un registro con el id:' + id + error
       },
         HttpStatus.NOT_FOUND)
     }
