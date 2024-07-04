@@ -14,6 +14,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   async getUserById(@Param(('id'), new ParseIntPipe({
     errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
   })) id: string): Promise<User> {

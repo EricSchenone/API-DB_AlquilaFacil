@@ -30,9 +30,8 @@ export class Booking {
     @JoinColumn({ name: 'id_property', referencedColumnName: 'id_property' })
     property: Property;
 
-    @OneToOne(() => MercadoPago)
-    @JoinColumn({ name: 'id_preference', referencedColumnName: 'id_preference'})
-    preference: Preference;
+    @OneToOne(() => MercadoPago, (mercadoPago) => mercadoPago.booking )
+    mercadoPago: MercadoPago;
 
     constructor(date: number, date_init: number, date_finish: number, id_property: number, status: boolean, id_preference: string) {
         this.date = date;

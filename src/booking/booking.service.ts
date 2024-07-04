@@ -44,7 +44,7 @@ export class BookingService {
     const bookings: Booking[] = await this.bookingRepository.find({
       relations: {
         property: true,
-        preference: true
+        mercadoPago: true
       }
     });
     return bookings;

@@ -8,6 +8,7 @@ import { LocationModule } from './location/location.module';
 import { BookingModule } from './booking/booking.module';
 import { AuthModule } from './auth/auth.module';
 import { MercadoPagoModule } from './mercado_pago/mercado_pago.module';
+import { PaymentModule } from './payment/payment.module';
 
 
 @Module({
@@ -30,7 +31,8 @@ import { MercadoPagoModule } from './mercado_pago/mercado_pago.module';
     LocationModule,
     BookingModule,
     AuthModule,
-    MercadoPagoModule 
+    MercadoPagoModule,
+    PaymentModule 
   ],
   controllers: [AppController],
   providers: [AppService],

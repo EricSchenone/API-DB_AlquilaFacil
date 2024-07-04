@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, HttpStatus, UseGuards } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { BookingDto } from './dto/create-booking.dto';
 import { Booking } from './entities/booking.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 
 @Controller('booking')
@@ -9,6 +10,7 @@ export class BookingController {
   constructor(private readonly bookingService: BookingService) { }
 
   @Post()
+  @UseGuards(AuthGuard)
   async createBooking(
     @Body() booking: BookingDto
   ): Promise<Booking> {
@@ -38,6 +40,7 @@ export class BookingController {
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   async updateBooking(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
     id: number,
@@ -47,6 +50,7 @@ export class BookingController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   async deleteBooking(
     @Param(('id'), new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
     id: number,

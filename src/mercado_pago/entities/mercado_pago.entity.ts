@@ -16,7 +16,7 @@ export class MercadoPago {
     @Column({ nullable: true })
     private unit_price: number;
 
-    @OneToOne(() => Booking, booking => booking.preference)
+    @OneToOne(() => Booking, booking => booking.id_preference)
     booking: Booking;
 
     constructor(title: string, quantity: number, unit_price: number) {

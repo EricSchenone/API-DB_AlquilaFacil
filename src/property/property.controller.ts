@@ -40,14 +40,6 @@ export class PropertyController {
     return this.propertyService.updateProperty(id, property);
   }
 
-  @Patch('/partial/:id')
-  async updatePartialProeprty(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
-    id: number,
-    @Body() property: PropertyDto,
-  ): Promise<Property> {
-    return this.propertyService.updateProperty(id, property);
-  }
 
   @Delete(':id')
   @UseGuards(AuthGuard)
