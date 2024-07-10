@@ -105,7 +105,7 @@ export class PropertyService {
       if (error instanceof QueryFailedError) {
         throw new HttpException({
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error en la consulta a la base de datos'
+          error: 'Error en la consulta a la base de datos' + error
         }, HttpStatus.INTERNAL_SERVER_ERROR)
       }
       throw new HttpException(

@@ -15,11 +15,12 @@ export class BookingService {
     console.log(bookingDto);
 
     try {
-      const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.id_property, bookingDto.status, bookingDto.id_preference);
+      const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.id_property, bookingDto.id_user, bookingDto.status, bookingDto.id_preference);
       newBooking.setDate(bookingDto.date);
       newBooking.setDateInit(bookingDto.date_init);
       newBooking.setDateFinish(bookingDto.date_finish);
       newBooking.setPropertyId(bookingDto.id_property);
+      newBooking.setIdUser(bookingDto.id_user);
       newBooking.setStatus(bookingDto.status);
       newBooking.setPreferenceId(bookingDto.id_preference);
       const savedBooking: Booking = await this.bookingRepository.save(newBooking);
@@ -44,7 +45,8 @@ export class BookingService {
     const bookings: Booking[] = await this.bookingRepository.find({
       relations: {
         property: true,
-        mercadoPago: true
+        mercadoPago: true,
+        user: true
       }
     });
     return bookings;

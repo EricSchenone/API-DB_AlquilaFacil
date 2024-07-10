@@ -1,5 +1,6 @@
 import { Booking } from "src/booking/entities/booking.entity";
-import { Column, Entity, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Payment } from "src/payment/entities/payment.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('preferences_mp')
@@ -16,8 +17,12 @@ export class MercadoPago {
     @Column({ nullable: true })
     private unit_price: number;
 
-    @OneToOne(() => Booking, booking => booking.id_preference)
+    @OneToOne(() => Booking, booking => booking.mercadoPago)
     booking: Booking;
+    
+    @OneToOne(() => Payment, payment => payment.mercadoPago)
+    payment: Payment;
+    
 
     constructor(title: string, quantity: number, unit_price: number) {
         this.title = title;

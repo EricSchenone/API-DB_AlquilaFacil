@@ -35,14 +35,10 @@ export class PaymentService {
 
     }
   }
-
+ 
   async getAllPayments(): Promise<Payment[]> {
     try{
-      const payments: Payment[] = await this.paymentRepository.find({
-        relations: {
-          mercadoPago: true,
-        }
-      });
+      const payments: Payment[] = await this.paymentRepository.find(); 
       return payments;
 
     } catch(error) {

@@ -38,7 +38,12 @@ export class UserService {
   }
 
   async getAll(): Promise<User[]> {
-    const allUsers: User[] = await this.userRepository.find()
+    const allUsers: User[] = await this.userRepository.find({
+      relations: {
+        bookings: true,
+        property: true,
+      }
+    })
     return allUsers;
   }
 

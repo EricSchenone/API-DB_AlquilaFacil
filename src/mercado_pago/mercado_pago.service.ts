@@ -33,12 +33,12 @@ export class MercadoPagoService {
           }
         ],
         back_urls: {
-          success: "https://32e2-160-238-169-216.ngrok-free.app/payments",
+          success: "https://13e6-160-238-170-106.ngrok-free.app/payments",
           failure: "http://localhost:5173",
           pending: "http://localhost:5173"
         },
         auto_return: "approved",
-        notification_url: "https://32e2-160-238-169-216.ngrok-free.app/payments",
+        notification_url: "https://13e6-160-238-170-106.ngrok-free.app/payments",
       }
     })
     console.log(res);
@@ -56,7 +56,13 @@ export class MercadoPagoService {
   
     
     async getAll(): Promise<MercadoPago[]> {
-      const allPreferences: MercadoPago[] = await this.repositoryMercadoPago.find();
+      const allPreferences: MercadoPago[] = await this.repositoryMercadoPago.find({
+        relations: {
+          booking: true,
+          payment:true
+        
+        }
+      });
       return allPreferences;
     }
     

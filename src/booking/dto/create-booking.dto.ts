@@ -14,6 +14,9 @@ export class BookingDto {
     @IsNumber()
     readonly id_property: number;
 
+    @IsNumber()
+    readonly id_user: number;
+
     @IsBoolean()
     readonly status: boolean;
 

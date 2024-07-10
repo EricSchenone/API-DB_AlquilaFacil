@@ -1,4 +1,5 @@
 import { Preference } from "mercadopago";
+import { Booking } from "src/booking/entities/booking.entity";
 import { MercadoPago } from "src/mercado_pago/entities/mercado_pago.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 
@@ -19,12 +20,13 @@ export class Payment {
     private merchant_order_id: number;
 
     @Column()
-    private id_preference: string;
+     id_preference: string;
 
     @Column()
     private processing_mode: string;
 
-    @OneToOne(() => MercadoPago, (mercadoPago) => mercadoPago.id_preference)
+    @OneToOne(() => MercadoPago, mercadoPago => mercadoPago.payment)
+    @JoinColumn({ name: "id_preference" })
     mercadoPago: MercadoPago;
 
     constructor( payment_id: number, status: string, payment_type: string, merchant_order_id: number, id_preference: string, processing_mode: string ) {
