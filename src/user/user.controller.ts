@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Body, Patch, Param, Delete, ParseIntPipe, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Body, Param, Delete, ParseIntPipe, HttpStatus, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
@@ -29,5 +29,13 @@ export class UserController {
     @Body() user: UserDto): Promise<User> {
       return this.userService.updateUser(id, user)
     }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  async deleteUser(@Param(('id'), new ParseIntPipe({
+    errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
+  })) id: string): Promise<void> {
+    return this.userService.deleteUser(+id);
+  }
 
 }

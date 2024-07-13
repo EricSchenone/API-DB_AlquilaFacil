@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login-auth.dto';
 import { RegisterDto } from './dto/register-auth.dto';
 import { User } from 'src/user/entities/user.entity';
+import { ValidationDto } from './dto/validationUser-auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -17,6 +18,11 @@ export class AuthController {
   @Post('login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Post('validate')
+  async validationUser(@Body() validationDto: ValidationDto): Promise<void> {
+    return this.authService.validationUser(validationDto);
   }
 
   

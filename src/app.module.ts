@@ -11,6 +11,7 @@ import { MercadoPagoModule } from './mercado_pago/mercado_pago.module';
 import { PaymentModule } from './payment/payment.module';
 
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot( {
@@ -32,7 +33,7 @@ import { PaymentModule } from './payment/payment.module';
     BookingModule,
     AuthModule,
     MercadoPagoModule,
-    PaymentModule 
+    PaymentModule
   ],
   controllers: [AppController],
   providers: [AppService],

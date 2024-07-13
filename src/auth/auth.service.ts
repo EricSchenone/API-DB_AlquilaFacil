@@ -5,6 +5,7 @@ import { RegisterDto } from './dto/register-auth.dto';
 import * as bcryptjs from "bcryptjs";
 import { LoginDto } from './dto/login-auth.dto';
 import { User } from 'src/user/entities/user.entity';
+import { ValidationDto } from './dto/validationUser-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -43,6 +44,21 @@ export class AuthService {
       token: accesToken,
     };
   }
+
+  async validationUser( {email, password} : ValidationDto): Promise<any> {
+     const user = await this.userService.getUserByEmail(email);
+     if (!user) throw new NotFoundException("Usuario no encontrado");
+ 
+     const isPasswordValid = await bcryptjs.compare(password, user.getPassword());
+     
+     if (!isPasswordValid) {
+       return { isValid: false, message: "Contraseña incorrecta" };
+     }
+ 
+     return { isValid: true, message: "Usuario validado correctamente" };
+   }
+ 
+  
 
 
 

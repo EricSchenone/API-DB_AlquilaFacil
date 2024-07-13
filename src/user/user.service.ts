@@ -89,7 +89,7 @@ export class UserService {
     }
   }
 
-  public async updateUser(id: number, userDto: UserDto): Promise<User> {
+  async updateUser(id: number, userDto: UserDto): Promise<User> {
     try {
       let criterio: FindOneOptions = { where: { id_user: id } };
       let updateUser: User = await this.userRepository.findOne(criterio);
@@ -107,6 +107,28 @@ export class UserService {
         status: HttpStatus.NOT_FOUND,
         error: 'Error en la actiualizacion del usuario ' + error
       }, HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async deleteUser( id: number): Promise<any> {
+    try {
+      const res = await this.userRepository.delete(id)
+
+    } catch(error) {
+      if (error instanceof QueryFailedError) {
+        throw new HttpException({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          messagge:'Error en la consulta a la base de datos',
+          error: error
+        },
+          HttpStatus.INTERNAL_SERVER_ERROR)
+      };
+      throw new HttpException({
+        status: HttpStatus.NOT_FOUND,
+        messagge:'No existe un usuario con el id:' + id, 
+        error: error
+      }, HttpStatus.NOT_FOUND)
+
     }
   }
 
