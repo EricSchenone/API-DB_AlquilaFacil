@@ -12,7 +12,6 @@ export class BookingService {
   private readonly bookingRepository: Repository<Booking>) { }
 
   async createBooking(bookingDto: BookingDto): Promise<Booking> {
-    console.log(bookingDto);
 
     try {
       const newBooking: Booking = new Booking(bookingDto.date, bookingDto.date_init, bookingDto.date_finish, bookingDto.id_property, bookingDto.id_user, bookingDto.status, bookingDto.id_preference);
@@ -24,7 +23,6 @@ export class BookingService {
       newBooking.setStatus(bookingDto.status);
       newBooking.setPreferenceId(bookingDto.id_preference);
       const savedBooking: Booking = await this.bookingRepository.save(newBooking);
-      console.log(savedBooking.getIdBooking());
 
       if (savedBooking.getIdBooking()) return newBooking;
     } catch (error) {

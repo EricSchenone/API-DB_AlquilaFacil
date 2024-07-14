@@ -33,24 +33,18 @@ export class MercadoPagoService {
           }
         ],
         back_urls: {
-          success: " https://a795-160-238-170-28.ngrok-free.app/payments",
+          success:  "https://alquilafacil-5e48c.web.app/payments",
           failure: "http://localhost:5173",
           pending: "http://localhost:5173"
         },
         auto_return: "approved",
-        notification_url: " https://a795-160-238-170-28.ngrok-free.app/payments",
+        notification_url:  "https://alquilafacil-5e48c.web.app/payments",
       }
     })
-    console.log(res);
-    
-    
     
     const newPreference: MercadoPago = new MercadoPago(mercadoPagoDto.title, mercadoPagoDto.quantity, mercadoPagoDto.unit_price);
     newPreference.id_preference = res.id;
       await this.repositoryMercadoPago.save(newPreference);
-      
-      console.log(`la concha de la lroa: ${newPreference.id_preference}`);
-      
       return { id: res.id };
     }
   
